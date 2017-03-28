@@ -1,0 +1,27 @@
+package edu.iful.oop;
+
+public class Matrix {
+    private int row, col;
+    private Integer[][] array;
+
+    public Matrix(int x, int y) {
+        this.row = x;
+        this.col = y;
+    }
+
+    public static void main(String[] args) {
+        Matrix matrix = new Matrix(5,5);
+        matrix.array =new Integer[matrix.row][matrix.col];
+        matrix.Maaa(matrix.array);
+    }
+
+    public <T> void Maaa(T[][] matrix) {
+        for (Integer row = 0; row < matrix.length; row++) {
+            for (Integer col = 0; col < matrix[row].length; col++) {
+                matrix[row][col]=(T)col;
+                System.out.print(matrix[row][col] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
