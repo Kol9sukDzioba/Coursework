@@ -2,26 +2,75 @@ package edu.iful.oop;
 
 public class Matrix {
     private int row, col;
-    private Integer[][] array;
+    private Integer[][] matrix;
 
-    public Matrix(int x, int y) {
-        this.row = x;
-        this.col = y;
+    public Matrix(int row, int col) {
+        this.row = row;
+        this.col = col;
+        RandomFillMatrix(row, col);
     }
 
-    public static void main(String[] args) {
-        Matrix matrix = new Matrix(5,5);
-        matrix.array =new Integer[matrix.row][matrix.col];
-        matrix.Maaa(matrix.array);
+    public Integer[][] getMatrix() {
+        return matrix;
     }
-
-    public <T> void Maaa(T[][] matrix) {
-        for (Integer row = 0; row < matrix.length; row++) {
-            for (Integer col = 0; col < matrix[row].length; col++) {
-                matrix[row][col]=(T)col;
-                System.out.print(matrix[row][col] + " ");
+    //Друк матриці, є варіант як іншим способом друкувати
+    public void printMatrix(Integer[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
             }
             System.out.println();
         }
+    }
+    
+    //Заповнюю матрицю
+    public void RandomFillMatrix(int a, int b) {
+        matrix = new Integer[a][b];
+        for (int i = 0; i < a; i++) {
+            for (int j = 0; j < b; j++) {
+                matrix[i][j] = (int) (Math.random() * 10);
+            }
+        }
+    }
+    //Транспортування
+    public Integer[][] transportMatrix(Integer[][] matrix) {
+        Integer[][] b = new Integer[col][row];
+        for (int i = 0; i < matrix.length; ++i)
+            for (int j = 0; j < matrix.length; ++j) {
+                b[i][j] = matrix[j][i];
+            }
+        return b;
+    }
+    //Складання матриць
+    public Integer[][] doublerMatrix(Integer[][] matrix1, Integer[][] matrix2) {
+        Integer[][] result = new Integer[matrix1.length][matrix2.length];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                result[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+        return result;
+    }
+    
+    //Віднімання матриць
+    public Integer[][] substractionMatrix(Integer[][] matrix1, Integer[][] matrix2) {
+        Integer[][] result = new Integer[matrix1.length][matrix2.length];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                result[i][j] = matrix1[i][j] - matrix2[i][j];
+            }
+        }
+        return result;
+    }
+    
+    //Множення, яке я не доробив, не можу розібратися ніяк
+    public Integer[][] multiplicationMatrix(Integer[][] matrix1, Integer[][] matrix2) {
+        Integer[][] result = new Integer[matrix1.length][matrix2.length];
+        for (int i = 0; i < row; i++)
+            for (int j = 0; j < matrix[0].length; j++)
+                for (int k = 0; k < col; k++) {
+                    result[i][j] = matrix1[i][k] * matrix2[k][j];
+                }
+        return  result;
     }
 }
