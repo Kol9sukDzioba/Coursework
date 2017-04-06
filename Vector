@@ -1,0 +1,54 @@
+package edu.iful.oop;
+
+import java.util.Scanner;
+
+public class Vector{
+    private int a;
+    private Integer[] vector;
+    private Integer[] newVector;
+
+    public Vector(int a) {
+        this.a = a;
+        vectorRandomFill(a);
+    }
+
+    public Integer[] getVector() {
+        return vector;
+    }
+
+    public void vectorRandomFill(int a){
+        vector=new Integer[a];
+        for (int i = 0; i < a; i++) {
+            vector[i]=(int) (Math.random()*10);
+        }
+    }
+
+    public void printVector(Integer[] vector){
+        for (int i = 0; i < vector.length; i++) {
+            System.out.print(vector[i]+" ");
+        }
+    }
+   //Метод для зміни довжини вектору зі збереженням даних
+    public void vectorLenght(int a){
+        newVector=new Integer[a];
+        if(vector.length<newVector.length) {
+            for (int i = 0; i < vector.length; i++) {
+                newVector[i] = vector[i];
+            }
+        }
+        else {
+            for (int i = 0; i < newVector.length; i++) {
+                    newVector[i] = vector[i];
+                }
+        }
+
+        for (int i=0;i<newVector.length;i++){
+            if(newVector[i]==null){
+                newVector[i]=(int) (Math.random()*10);
+            }
+        }
+        vector=newVector;
+
+    }
+
+}
