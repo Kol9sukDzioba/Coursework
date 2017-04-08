@@ -3,12 +3,11 @@ package edu.iful.oop;
 import java.util.Scanner;
 
 public class Vector{
-    private int a;
+    private int rows;
     private Integer[] vector;
     private Integer[] newVector;
-
     public Vector(int a) {
-        this.a = a;
+        this.rows = a;
         vectorRandomFill(a);
     }
 
@@ -24,11 +23,16 @@ public class Vector{
     }
 
     public void printVector(Integer[] vector){
-        for (int i = 0; i < vector.length; i++) {
-            System.out.print(vector[i]+" ");
+        if(vector==null){
+            System.out.println("The length of matrix and vector are different, please input equal lenghts");
+        }
+        else {
+            for (int i = 0; i < vector.length; i++) {
+                System.out.println(vector[i] + " ");
+            }
         }
     }
-   //Метод для зміни довжини вектору зі збереженням даних
+
     public void vectorLenght(int a){
         newVector=new Integer[a];
         if(vector.length<newVector.length) {
@@ -47,8 +51,21 @@ public class Vector{
                 newVector[i]=(int) (Math.random()*10);
             }
         }
+        System.out.println("Змінений розмір вектора: "+vector.length);
         vector=newVector;
 
     }
 
-}
+    public static int vectorsScalarProduct(Integer [] vector1, Integer []vector2){
+        int result=0;
+        for (int i = 0; i < vector1.length; i++) {
+            result += vector1[i]*vector2[i];
+        }
+        System.out.println("Скалярний добуток векторів: ");
+        return result;
+    }
+
+
+    }
+
+
