@@ -4,10 +4,11 @@ public class Matrix {
     private int row, col;
     private Integer[][] matrix;
     private Integer[][] newMatrix;
+    Vector vector = new Vector();
 
     public Matrix(int a, int b) {
-        this.row=a;
-        this.col=b;
+        this.row = a;
+        this.col = b;
         matrix = new Integer[a][b];
         MatrixRandomFill(this.row, this.col);
     }
@@ -15,7 +16,7 @@ public class Matrix {
     public Integer[][] getMatrix() {
         return matrix;
     }
-    
+
     public void matrix(int z, int x) {
         this.newMatrix = new Integer[z][x];
         for (int i = 0; i < row; i++) {
@@ -41,67 +42,73 @@ public class Matrix {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public void MatrixRandomFill(Integer a, Integer b) {
         matrix = new Integer[a][b];
-                for (int i = 0; i < a; i++) {
-                    for (int j = 0; j < b; j++) {
-                        matrix[i][j] = (int) (Math.random() * 10);
-                    }
-                }
+        for (int i = 0; i < a; i++) {
+            for (int j = 0; j < b; j++) {
+                matrix[i][j] = (int) (Math.random() * 10);
             }
+        }
+        printMatrix(matrix);
+    }
 
-    public Integer[][] transportMatrix(Integer[][] matrix) {
+    public void transportMatrix(Integer[][] matrix) {
         Integer[][] result = new Integer[col][row];
         for (int i = 0; i < matrix.length; ++i)
             for (int j = 0; j < matrix.length; ++j) {
                 result[i][j] = matrix[j][i];
             }
-        return result;
+        System.out.println("Транспортована матриця:");
+            printMatrix(result);
     }
 
-    public Integer[][] doublerMatrix(Integer[][] matrix1, Integer[][] matrix2) {
+    public void doublerMatrix(Integer[][] matrix1, Integer[][] matrix2) {
         Integer[][] result = new Integer[matrix1.length][matrix2.length];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 result[i][j] = matrix1[i][j] + matrix2[i][j];
             }
         }
-        return result;
+        System.out.println("Складена матриця: ");
+        printMatrix(result);
     }
 
-    public Integer[][] substractionMatrix(Integer[][] matrix1, Integer[][] matrix2) {
+    public void substractionMatrix(Integer[][] matrix1, Integer[][] matrix2) {
         Integer[][] result = new Integer[matrix1.length][matrix2.length];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 result[i][j] = matrix1[i][j] - matrix2[i][j];
             }
         }
-        return result;
+        System.out.println("Складання матриць: ");
+        printMatrix(result);
     }
 
-    public Integer[][] multiplicationMatrix(Integer[][] matrix1, Integer[][] matrix2) {
+    public void multiplicationMatrix(Integer[][] matrix1, Integer[][] matrix2) {
         Integer[][] result = new Integer[matrix1.length][matrix2.length];
         for (int i = 0; i < row; i++)
             for (int j = 0; j < matrix[0].length; j++)
                 for (int k = 0; k < col; k++) {
                     result[i][j] = matrix1[i][k] * matrix2[k][j];
                 }
-        return  result;
+        System.out.println("Множення матриць: ");
+        printMatrix(result);
     }
 
-    public Integer[] matrixToVector(Integer[][] matrix, Integer[] vector) {
+    public void matrixToVector(Integer[][] matrix, Integer[] vector) {
 
         if (col != vector.length) {
-            return null;
+            System.out.println("Нерівні довжини");
         }
 
         Integer[] result = new Integer[row];
         Integer res = 0;
 
         System.out.println("Результат множення матриці на вектор: ");
-        if(col==vector.length) {
+        if (col == vector.length) {
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < vector.length; j++) {
                     res += matrix[i][j] * vector[j];
@@ -110,7 +117,8 @@ public class Matrix {
                 res = 0;
             }
         }
-        return result;
+        System.out.println("Множення матриці на вектор: ");
+        this.vector.printVector(result);
     }
 
 }
