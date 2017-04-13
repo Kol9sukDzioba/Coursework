@@ -1,43 +1,30 @@
 package edu.iful.oop;
 
 public class Matrix {
-    private int row, col;
-    private Integer[][] matrix;
-    private Integer[][] newMatrix;
-    Vector vector = new Vector();
+    private double[][] matrix;
+    private int row;
+    private int col;
 
-    public Matrix(int a, int b) {
-        this.row = a;
-        this.col = b;
-        matrix = new Integer[a][b];
-        MatrixRandomFill(this.row, this.col);
+    public Matrix(int m, int n) {
+        super();
+        row = m;
+        col = n;
+        matrix = new double[m][n];
+        MatrixRandomFill();
     }
 
-    public Integer[][] getMatrix() {
-        return matrix;
+    //Не розумію для чого ви створили були оцей конструктор
+    public Matrix(double[][] matrix) {
+        super();
+        row = matrix.length;
+        col = matrix[0].length;
+        this.matrix = matrix;
     }
 
-    public void matrix(int z, int x) {
-        this.newMatrix = new Integer[z][x];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                newMatrix[i][j] = matrix[i][j];
-            }
-        }
-        for (int i = 0; i < z; i++) {
-            for (int j = 0; j < x; j++) {
-                if (newMatrix[i][j] == null) {
-                    newMatrix[i][j] = (int) (Math.random() * 10);
-                }
-            }
-        }
-        this.matrix = newMatrix;
-    }
-
-    public void printMatrix(Integer[][] matrix) {
-
+    //Друк матриці
+    public void print() {
         for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 System.out.print(matrix[i][j] + " ");
             }
             System.out.println();
@@ -45,80 +32,91 @@ public class Matrix {
         System.out.println();
     }
 
-    public void MatrixRandomFill(Integer a, Integer b) {
-        matrix = new Integer[a][b];
-        for (int i = 0; i < a; i++) {
-            for (int j = 0; j < b; j++) {
-                matrix[i][j] = (int) (Math.random() * 10);
+    //Заповнення матриці
+    public void MatrixRandomFill() {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[i][j] = (int) (Math.random() * 5);
             }
         }
-        printMatrix(matrix);
     }
 
-    public void transportMatrix(Integer[][] matrix) {
-        Integer[][] result = new Integer[col][row];
-        for (int i = 0; i < matrix.length; ++i)
-            for (int j = 0; j < matrix.length; ++j) {
+    //Транспортування матриць
+    public void transposition() {
+        double[][] result = new double[col][row];
+        for (int i = 0; i < matrix.length; i++)
+            for (int j = 0; j < matrix[0].length; j++) {
                 result[i][j] = matrix[j][i];
             }
-        System.out.println("Транспортована матриця:");
-            printMatrix(result);
+        matrix = result;
     }
 
-    public void doublerMatrix(Integer[][] matrix1, Integer[][] matrix2) {
-        Integer[][] result = new Integer[matrix1.length][matrix2.length];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                result[i][j] = matrix1[i][j] + matrix2[i][j];
-            }
-        }
-        System.out.println("Складена матриця: ");
-        printMatrix(result);
-    }
-
-    public void substractionMatrix(Integer[][] matrix1, Integer[][] matrix2) {
-        Integer[][] result = new Integer[matrix1.length][matrix2.length];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                result[i][j] = matrix1[i][j] - matrix2[i][j];
-            }
-        }
-        System.out.println("Складання матриць: ");
-        printMatrix(result);
-    }
-
-    public void multiplicationMatrix(Integer[][] matrix1, Integer[][] matrix2) {
-        Integer[][] result = new Integer[matrix1.length][matrix2.length];
-        for (int i = 0; i < row; i++)
-            for (int j = 0; j < matrix[0].length; j++)
-                for (int k = 0; k < col; k++) {
-                    result[i][j] = matrix1[i][k] * matrix2[k][j];
-                }
-        System.out.println("Множення матриць: ");
-        printMatrix(result);
-    }
-
-    public void matrixToVector(Integer[][] matrix, Integer[] vector) {
-
-        if (col != vector.length) {
-            System.out.println("Нерівні довжини");
-        }
-
-        Integer[] result = new Integer[row];
-        Integer res = 0;
-
-        System.out.println("Результат множення матриці на вектор: ");
-        if (col == vector.length) {
+    //Множення матриць
+    public void multiplication(Matrix other) {
+        if (matrix.length != other.matrix.length) {
+            System.out.println("Довжини матриць нерівні!");
+        } else {
+            double[][] result = new double[matrix.length][other.matrix[0].length];
             for (int i = 0; i < matrix.length; i++) {
-                for (int j = 0; j < vector.length; j++) {
-                    res += matrix[i][j] * vector[j];
+                for (int j = 0; j < other.matrix[0].length; j++) {
+                    for (int k = 0; k < other.matrix.length; k++) {
+                        result[i][j] += matrix[i][k] * other.matrix[k][j];
+                    }
+                }
+            }
+            matrix = result;
+        }
+    }
+
+    //Складання матриць
+    public void drafting(Matrix other) {
+        if(matrix.length!=other.matrix.length){
+            System.out.println("Довжини матриць нерівні!");
+        }
+        else {
+            double[][] result = new double[matrix.length][matrix[0].length];
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[0].length; j++) {
+                    result[i][j] = matrix[i][j] + other.matrix[i][j];
+                }
+            }
+            matrix = result;
+        }
+    }
+
+    //Віднімання матриць
+    public void substraction(Matrix other) {
+        if(matrix.length!=other.matrix.length){
+            System.out.println("Довжини матриць нерівні!");
+        }
+        else {
+            double[][] result = new double[matrix.length][matrix[0].length];
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[0].length; j++) {
+                    result[i][j] = matrix[i][j] - other.matrix[i][j];
+                }
+            }
+            matrix = result;
+        }
+    }
+
+    //Множення матриці на вектор
+    public void matrixToVector(Vector vector) {
+        double[] result = new double[row];
+        double res = 0;
+
+        if (matrix[0].length != vector.getVector().length) {
+            System.out.println("Дожвина вектора та кількість стовбців матриці не рівні!");
+        } else {
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < vector.getVector().length; j++) {
+                    res += matrix[i][j] * vector.getVector()[j];
                 }
                 result[i] = res;
                 res = 0;
             }
+            vector.setVector(result);
         }
-        System.out.println("Множення матриці на вектор: ");
-        this.vector.printVector(result);
     }
-
 }
+
