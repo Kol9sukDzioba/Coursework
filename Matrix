@@ -36,7 +36,7 @@ public class Matrix {
     public void MatrixRandomFill() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                matrix[i][j] = (int) (Math.random() * 5);
+                matrix[i][j] = (int) (Math.random() * 10);
             }
         }
     }
@@ -70,10 +70,9 @@ public class Matrix {
 
     //Складання матриць
     public void drafting(Matrix other) {
-        if(matrix.length!=other.matrix.length){
+        if (matrix.length != other.matrix.length) {
             System.out.println("Довжини матриць нерівні!");
-        }
-        else {
+        } else {
             double[][] result = new double[matrix.length][matrix[0].length];
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix[0].length; j++) {
@@ -86,10 +85,9 @@ public class Matrix {
 
     //Віднімання матриць
     public void substraction(Matrix other) {
-        if(matrix.length!=other.matrix.length){
+        if (matrix.length != other.matrix.length) {
             System.out.println("Довжини матриць нерівні!");
-        }
-        else {
+        } else {
             double[][] result = new double[matrix.length][matrix[0].length];
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix[0].length; j++) {
@@ -118,5 +116,64 @@ public class Matrix {
             vector.setVector(result);
         }
     }
-}
 
+    //Порівняння матриць
+    public void compare(Matrix other) { //метод який виводить результати на екран згідно значень методу elements
+        if (elements(other)) {
+            System.out.println("Матриці є рівними.");
+        } else {
+            System.out.println("Матриці не рівні!");
+        }
+    }
+
+    public boolean elements(Matrix other) { //метод який порівнює матриці і передає результати в метод compare
+        if (matrix == other.matrix) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        if (col != other.col || row != other.row) {
+            return false;
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == other.matrix[i][j]) {
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    //Пошук седлових точок
+    public void saddle() {
+        double minRow; //мінімальне число в рядку
+        double maxCol; //максимальне число в стовбці
+        double value=0; //кількість седлових точок
+
+        for (int i = 0; i < matrix.length; i++) {
+            double element=0; //індекс манімального числа в рядку
+            minRow=matrix[i][0]; //задаю стартове значення числа в рядку(значення першого елемента в рядку)
+            maxCol=matrix[i][(int) element]; //задаю стартове значення числа в стовбці(значення першого елемента в стовбці)
+
+            for (int j = 0; j < col; j++) { //цикл для знаходження мінімального числа в першому рядку
+                if(matrix[i][j]<=minRow){ //якщо число менше за задане, то змінюємо його
+                    minRow=matrix[i][j]; //заміняю число меншим
+                    element=j; //записую індекс меншого елемента
+                }
+            }
+            for (int j = 0; j<row; j++){ //цикл для знаходження максимального числа в стовбці, елемент якого найменший в рядку
+                if(matrix[j][(int)element]>=maxCol){ //якщо елемент більший за задаше спочатку значення змінюю його
+                    maxCol=matrix[j][(int)element]; //заміна стартового значення на більше
+                }
+            }
+            if(minRow>=maxCol){ //якщо мінімальний елемент в рядку більший/рівний за максимальний елемент в стовбці
+                value++;        //збільшую кількість седлових точок
+            }
+        }
+        System.out.println("Кількість седлових точнок: "+value);
+    }
+}
