@@ -1,6 +1,7 @@
 package edu.iful.oop;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Matrix {
     private double[][] matrix;
@@ -38,7 +39,7 @@ public class Matrix {
     public void MatrixRandomFill() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                matrix[i][j] = (int) (Math.random() * 10);
+                matrix[i][j] =(int) (Math.random()*40-20);
             }
         }
     }
@@ -201,9 +202,9 @@ public class Matrix {
 
     //Обчислення норми матриці
     public void norm() {
-        double norm = 0;                                    //норма матриці
+        double norm = 0; //норма матриці
         for (int i = 0; i < row; i++) {
-            double s = 0.0;                                 //норма рядка матриці
+            double s = 0.0; //норма рядка матриці
             for (int j = 0; j < col; j++) {
                 s += Math.abs(matrix[i][j]);
             }
@@ -213,10 +214,21 @@ public class Matrix {
         System.out.println("Норма матриці: " + norm);
     }
 
-/*    public void minMax(){
-        double min;
-        double max;
-        for
-    }*
+    public void minMax() {
+        double max=matrix[0][0];
+        double min=matrix[0][0];
+        for (int i = 0; i < col; i++) {
+            for (int j = 0; j < col; j++) { 
+                if (matrix[i][j] > max) { 
+                    max = matrix[i][j]; 
+                }
+                if(matrix[i][j]<min){
+                    min=matrix[i][j];
+                }
+            }
+        }
+        System.out.println("Макcимальний елемент: " + max);
+        System.out.println("Мінімальний елемент: " + min);
+    }
 
 }
