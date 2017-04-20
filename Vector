@@ -1,5 +1,3 @@
-package edu.iful.oop;
-
 public class Vector{
     private double[] vector;
     private int length;
@@ -30,27 +28,6 @@ public class Vector{
         for (int i = 0; i < vector.length; i++) {
             vector[i]=(int) (Math.random()*5);
         }
-    }
-
-    //Метод для зміни довжини вектор
-    public void lenght(int a){
-        double[] newVector=new double[a];
-        if(vector.length<newVector.length) {
-            for (int i = 0; i < vector.length; i++) {
-                newVector[i] = vector[i];
-            }
-            for (int i=vector.length; i<newVector.length;i++){
-                if(newVector[i]==0.0){
-                    newVector[i]=(int) (Math.random()*10);
-                }
-            }
-        }
-        else {
-            for (int i = 0; i < newVector.length; i++) {
-                    newVector[i] = vector[i];
-                }
-        }
-        vector=newVector;
     }
 
     //Скалярний добуток векторів
