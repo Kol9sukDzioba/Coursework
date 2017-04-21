@@ -12,6 +12,13 @@ public class Matrix {
         matrix = new double[m][n];
         MatrixRandomFill();
     }
+    
+    public Matrix(double[][] m) {
+        super();
+        row = m.length;
+        col = m[0].length;
+        matrix = m;
+    }
 
     //Друк матриці
     public void print() {
@@ -137,52 +144,48 @@ public class Matrix {
     }
 
     //Пошук седлових точок
-    public void saddle() {
-        double value=0; //кількість седлових точок
-
-        for (int i = 0; i < row; i++) {
+    public int[] saddle() {
+    	    for (int i = 0; i < row; i++) {
             double minRow; //мінімальне число в рядку
             double maxCol; //максимальне число в стовбці
-            double[] element=new double[col]; //індекси одинакових мінімальних чисел
-            double dubls=0; //кількість одинакових чисел в рядку
+            int[] element=new int[matrix[0].length]; //індекси одинакових мінімальних чисел
+            int dubls=1; //кількість одинакових чисел в рядку
+            int a=0;
 
             minRow=matrix[i][0]; //задаю стартове значення числа в рядку(значення першого елемента в рядку)
 
-            for (int j = 0; j < col; j++) { //цикл для знаходження мінімального числа в першому рядку
+            for (int j=0; j < matrix[0].length; j++) { //цикл для знаходження мінімального числа в першому рядку
                 if(matrix[i][j]<=minRow){ //якщо число менше за задане, то змінюємо його
                     minRow=matrix[i][j]; //заміняю число меншим
                 }
             }
 
-            for(int j=0; j<col; j++){  //цикл для визначення кількості одинакових чисел в рядку
+            for(int j=0; j<matrix[0].length; j++){  //цикл для визначення кількості одинакових чисел в рядку
                 if (matrix[i][j] == minRow) {
                     dubls++;
                 }
             }
-
-            element=new double[(int)dubls]; //створюю нормальну довжину масиву індексів мінімальних елементів
-
-            for (int j=0; j<element.length; j++) { //цикл для присвоєння індексів мін елементів в масив
-                for (int k = 0; k < col; k++) {
-                    if (matrix[i][k] == minRow) {
-                        element[j]=k;
-                    }
+            
+            element=new int[dubls];
+            for(int j=0; j<matrix[0].length; j++){ 
+                if (matrix[i][j] == minRow) {
+                   element[a]=j;
                 }
             }
 
             for(int j=0; j<element.length; j++) { //перевіряє стовбці по всіх одинакових елементах в рядку
                 maxCol=matrix[0][(int)element[j]]; //ініціалізую значення 1 елемента в стовбці
-                for (int k = 0; k < row; k++) { //знаходження максимального числа в стовбці
+                for (int k = 0; k < matrix.length; k++) { //знаходження максимального числа в стовбці
                     if (matrix[k][(int)element[j]] >= maxCol) { //якщо елемент більший за задаше спочатку значення змінюю його
                         maxCol = matrix[k][(int)element[j]]; //заміна стартового значення на більше
                     }
                 }
-                if(minRow>=maxCol){ //перевірка седлової точки
-                    value++;        //збільшую кількість седлових точок
+                if(minRow>=maxCol) { //перевірка седлової точки
+                  	return new int[] {i, element[j]};
                 }
             }
         }
-        System.out.println("Кількість седлових точнок: "+value);
+    	    return null;
     }
 
     //Обчислення норми матриці
