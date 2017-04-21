@@ -1,7 +1,4 @@
-package edu.iful.oop;
 
-import java.util.Arrays;
-import java.util.Random;
 
 public class Matrix {
     private double[][] matrix;
@@ -14,14 +11,6 @@ public class Matrix {
         col = n;
         matrix = new double[m][n];
         MatrixRandomFill();
-    }
-
-    //Не розумію для чого ви створили були оцей конструктор
-    public Matrix(double[][] matrix) {
-        super();
-        row = matrix.length;
-        col = matrix[0].length;
-        this.matrix = matrix;
     }
 
     //Друк матриці
@@ -46,9 +35,9 @@ public class Matrix {
 
     //Транспортування матриць
     public void transposition() {
-        double[][] result = new double[col][row];
-        for (int i = 0; i < matrix.length; i++)
-            for (int j = 0; j < matrix[0].length; j++) {
+        double[][] result = new double[matrix[0].length][matrix.length];
+        for (int i = 0; i < matrix[0].length; i++)
+            for (int j = 0; j < matrix.length; j++) {
                 result[i][j] = matrix[j][i];
             }
         matrix = result;
@@ -56,9 +45,6 @@ public class Matrix {
 
     //Множення матриць
     public void multiplication(Matrix other) {
-        if (matrix.length != other.matrix.length) {
-            System.out.println("Довжини матриць нерівні!");
-        } else {
             double[][] result = new double[matrix.length][other.matrix[0].length];
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < other.matrix[0].length; j++) {
@@ -69,7 +55,6 @@ public class Matrix {
             }
             matrix = result;
         }
-    }
 
     //Складання матриць
     public void drafting(Matrix other) {
