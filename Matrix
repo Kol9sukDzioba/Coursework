@@ -5,6 +5,9 @@ public class Matrix {
     private int row;
     private int col;
 
+    public Matrix() {
+    }
+
     public Matrix(int m, int n) {
         super();
         row = m;
@@ -35,7 +38,7 @@ public class Matrix {
     public void MatrixRandomFill() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                matrix[i][j] = (int) (Math.random() * 10 - 5);
+                matrix[i][j] = (int) (Math.random() * 20 - 8);
             }
         }
     }
@@ -64,7 +67,7 @@ public class Matrix {
     }
 
     //Складання матриць
-    public void drafting(Matrix other) {
+    public void addition(Matrix other) {
         if (matrix.length != other.matrix.length) {
             System.out.println("Довжини матриць нерівні!");
         } else {
@@ -79,7 +82,7 @@ public class Matrix {
     }
 
     //Віднімання матриць
-    public void substraction(Matrix other) {
+    public void subtract(Matrix other) {
         if (matrix.length != other.matrix.length) {
             System.out.println("Довжини матриць нерівні!");
         } else {
@@ -95,20 +98,20 @@ public class Matrix {
 
     //Множення матриці на вектор
     public void matrixToVector(Vector vector) {
-        double[] result = new double[row];
+        double[] result = new double[matrix.length];
         double res = 0;
 
-        if (matrix[0].length != vector.getVector().length) {
+        if (matrix[0].length != vector.getArray().length) {
             System.out.println("Дожвина вектора та кількість стовбців матриці не рівні!");
         } else {
             for (int i = 0; i < matrix.length; i++) {
-                for (int j = 0; j < vector.getVector().length; j++) {
-                    res += matrix[i][j] * vector.getVector()[j];
+                for (int j = 0; j < vector.getArray().length; j++) {
+                    res += matrix[i][j] * vector.getArray()[j];
                 }
                 result[i] = res;
                 res = 0;
             }
-            vector.setVector(result);
+            vector.setArray(result);
         }
     }
 
@@ -211,8 +214,8 @@ public class Matrix {
     public void minMax() {
         double max = matrix[0][0];
         double min = matrix[0][0];
-        for (int i = 0; i < col; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] > max) {
                     max = matrix[i][j];
                 }
@@ -221,8 +224,8 @@ public class Matrix {
                 }
             }
         }
-        System.out.println("Макcимальний елемент: " + max);
-        System.out.println("Мінімальний елемент: " + min);
+        System.out.println("Макcимальний елемент матриці: " + max);
+        System.out.println("Мінімальний елемент матриці: " + min);
     }
 
 }
