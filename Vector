@@ -1,46 +1,86 @@
+package edu.iful.oop;
+
 public class Vector{
-    private double[] vector;
+    private double[] array;
     private int length;
 
     public Vector(int a) {
         length=a;
-        vector=new double[a];
+        array =new double[a];
         vectorRandomFill();
     }
 
-    public double[] getVector() {
-        return vector;
+    public double[] getArray() {
+        return array;
     }
 
-    public void setVector(double[] vector) {
-        this.vector = vector;
+    public void setArray(double[] array) {
+        this.array = array;
     }
     //Друк вектора
     public void print(){
-            for (int i = 0; i < vector.length; i++) {
-                System.out.println(vector[i] + " ");
+            for (int i = 0; i < array.length; i++) {
+                System.out.println(array[i] + " ");
             }
         System.out.println();
     }
 
     //Заповнення вектора
     public void vectorRandomFill(){
-        for (int i = 0; i < vector.length; i++) {
-            vector[i]=(int) (Math.random()*5);
+        for (int i = 0; i < array.length; i++) {
+            array[i]=(int) (Math.random() * 20 - 8);
         }
     }
 
     //Скалярний добуток векторів
-    public void scalarProduct(Vector other) {
-        if (vector.length != other.vector.length) {
+    public void dotProduct(Vector other) {
+        if (array.length != other.array.length) {
             System.out.println("Вектори мають різні довжини");
         } else {
-            int lenght = 0;
-            double[] result = new double[1];
-            for (int i = 0; i < vector.length; i++) {
-                lenght += vector[i] * other.vector[i];
-                result[0] = lenght;
+            double result=0;
+            for (int i = 0; i < array.length; i++) {
+                result += array[i] * other.array[i];
             }
         }
     }
+
+    public void addition(Vector other){
+        double[] result = new double[array.length];
+        if (array.length != other.array.length) {
+            System.out.println("Вектори мають різні довжини");
+        } else {
+            for (int i = 0; i < array.length; i++) {
+                result[i]= array[i] + other.array[i];
+            }
+        }
+        array=result;
+    }
+
+    public void subtract(Vector other){
+        double[] result = new double[array.length];
+        if (array.length != other.array.length) {
+            System.out.println("Вектори мають різні довжини");
+        } else {
+            for (int i = 0; i < array.length; i++) {
+                result[i]= array[i] - other.array[i];
+            }
+        }
+        array=result;
+    }
+
+    public void minMax() {
+        double max= array[0];
+        double min= array[0];
+        for (int i = 0; i< array.length; i++){
+            if (array[i] > max) {
+                max = array[i];
+            }
+            if (array[i] < min) {
+                min = array[i];
+            }
+        }
+        System.out.println("Макcимальний елемент вектора: " + max);
+        System.out.println("Мінімальний елемент вектора: " + min);
+    }
+
 }
