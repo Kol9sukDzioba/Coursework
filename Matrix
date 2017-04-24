@@ -107,34 +107,24 @@ public class Matrix {
     }
 
     //Множення матриці на вектор
-    public void matrixToVector(Vector vector) {
-        double[] result = new double[matrix.length];
-        double res = 0;
-
-        if (matrix[0].length != vector.getArray().length) {
-            System.out.println("Дожвина вектора та кількість стовбців матриці не рівні!");
-        } else {
+    public Vector matrixToVector(Vector vector) {
+        Vector result=null;
+        if (matrix[0].length == vector.getArray().length) {
+            result = new Vector(matrix.length);
+            double value = 0;
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < vector.getArray().length; j++) {
-                    res += matrix[i][j] * vector.getArray()[j];
+                    value += matrix[i][j] * vector.getArray()[j];
                 }
-                result[i] = res;
-                res = 0;
+                result.setValue(i,value);
+                value = 0;
             }
-            vector.setArray(result);
         }
+        return result;
     }
 
     //Порівняння матриць
-    public void compare(Matrix other) { //метод який виводить результати на екран згідно значень методу elements
-        if (elements(other)) {
-            System.out.println("Матриці є рівними.");
-        } else {
-            System.out.println("Матриці не рівні!");
-        }
-    }
-
-    public boolean elements(Matrix other) { //метод який порівнює матриці і передає результати в метод compare
+    public boolean compare(Matrix other) { //метод який порівнює матриці
         if (matrix == other.matrix) {
             return true;
         }
@@ -208,7 +198,7 @@ public class Matrix {
     }
 
     //Обчислення норми матриці
-    public void norm() {
+    public double norm() {
         double norm = 0; //норма матриці
         for (int i = 0; i < row; i++) {
             double s = 0.0; //норма рядка матриці
@@ -218,29 +208,36 @@ public class Matrix {
             if (s > norm)
                 norm = s;
         }
-        System.out.println("Норма матриці: " + norm);
+        return norm;
     }
 
-    public void minMax() {
+    public double max() {
         double max = matrix[0][0];
-        double min = matrix[0][0];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] > max) {
                     max = matrix[i][j];
                 }
+            }
+        }
+        return max;
+    }
+
+    public double min() {
+        double min = matrix[0][0];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] < min) {
                     min = matrix[i][j];
                 }
             }
         }
-        System.out.println("Макcимальний елемент матриці: " + max);
-        System.out.println("Мінімальний елемент матриці: " + min);
+        return min;
     }
 
     @Override
     public String toString() {
-        String result = "\n";
+        String result ="\n"+"";
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 result += String.valueOf(matrix[i][j]) + " ";
