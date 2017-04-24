@@ -147,10 +147,9 @@ public class Matrix {
     }
 
     //Пошук седлових точок
-    public void saddle() {
+    public int[] saddle() {
         double minRow; //мінімальне число в рядку
         double maxCol; //максимальне число в стовбці
-        int saddle = 0;
         for (int i = 0; i < row; i++) {
             minRow = matrix[i][0]; //задаю стартове значення числа в рядку(значення першого елемента в рядку)
 
@@ -183,18 +182,11 @@ public class Matrix {
                     }
                 }
                 if (minRow >= maxCol) { //перевірка седлової точки
-                    System.out.println("Перша седлова точка в " + i + " рядку та в " + elements[j] + " стовбці.");
-                    saddle++;
-                    break;
+                    return new int[]{i,elements[j]};
                 }
             }
-            if (saddle == 1) {
-                break;
-            }
         }
-        if (saddle == 0) {
-            System.out.println("Седлових точок в матриці немає.");
-        }
+        return null;
     }
 
     //Обчислення норми матриці
@@ -234,6 +226,8 @@ public class Matrix {
         }
         return min;
     }
+
+
 
     @Override
     public String toString() {
