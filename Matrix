@@ -5,15 +5,16 @@ public class Matrix {
     private int row;
     private int col;
 
-    public Matrix() {
+
+    public void setValue(int row, int col, double value) {
+        this.matrix[row][col] = value;
     }
 
     public Matrix(int m, int n) {
-        super();
         row = m;
         col = n;
         matrix = new double[m][n];
-        MatrixRandomFill();
+        fill();
     }
 
     public Matrix(double[][] m) {
@@ -35,7 +36,7 @@ public class Matrix {
     }
 
     //Заповнення матриці
-    public void MatrixRandomFill() {
+    public void fill() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 matrix[i][j] = (int) (Math.random() * 20 - 8);
@@ -43,57 +44,66 @@ public class Matrix {
         }
     }
 
-    //Транспортування матриць
-    public void transposition() {
-        double[][] result = new double[matrix[0].length][matrix.length];
+    //Транспонування матриць
+    public Matrix transposition() {
+        Matrix result = new Matrix(matrix[0].length, matrix.length);
+        double value;
         for (int i = 0; i < matrix[0].length; i++)
             for (int j = 0; j < matrix.length; j++) {
-                result[i][j] = matrix[j][i];
+                value = matrix[j][i];
+                result.setValue(i, j, value);
             }
-        matrix = result;
+        return result;
     }
 
     //Множення матриць
-    public void multiplication(Matrix other) {
-        double[][] result = new double[matrix.length][other.matrix[0].length];
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < other.matrix[0].length; j++) {
-                for (int k = 0; k < other.matrix.length; k++) {
-                    result[i][j] += matrix[i][k] * other.matrix[k][j];
+    public Matrix multiplication(Matrix other) {
+        Matrix result = null;
+        if (matrix[0].length == other.matrix.length) {
+            result = new Matrix(matrix.length, matrix[0].length);
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < other.matrix[0].length; j++) {
+                    double value = 0;
+                    for (int k = 0; k < other.matrix.length; k++) {
+                        value += matrix[i][k] * other.matrix[k][j];
+                    }
+                    result.setValue(i, j, value);
                 }
             }
         }
-        matrix = result;
+        return result;
     }
 
     //Складання матриць
-    public void addition(Matrix other) {
-        if (matrix.length != other.matrix.length) {
-            System.out.println("Довжини матриць нерівні!");
-        } else {
-            double[][] result = new double[matrix.length][matrix[0].length];
+    public Matrix addition(Matrix other) {
+        Matrix result = null;
+        if (matrix.length == other.matrix.length && matrix[0].length == other.matrix[0].length) {
+            result = new Matrix(matrix.length, matrix[0].length);
+            double value;
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix[0].length; j++) {
-                    result[i][j] = matrix[i][j] + other.matrix[i][j];
+                    value = matrix[i][j] + other.matrix[i][j];
+                    result.setValue(i, j, value);
                 }
             }
-            matrix = result;
         }
+        return result;
     }
 
     //Віднімання матриць
-    public void subtract(Matrix other) {
-        if (matrix.length != other.matrix.length) {
-            System.out.println("Довжини матриць нерівні!");
-        } else {
-            double[][] result = new double[matrix.length][matrix[0].length];
+    public Matrix subtract(Matrix other) {
+        Matrix result = null;
+        if (matrix.length == other.matrix.length && matrix[0].length == other.matrix[0].length) {
+            result = new Matrix(matrix.length,matrix[0].length);
+            double value;
             for (int i = 0; i < matrix.length; i++) {
                 for (int j = 0; j < matrix[0].length; j++) {
-                    result[i][j] = matrix[i][j] - other.matrix[i][j];
+                    value = matrix[i][j] - other.matrix[i][j];
+                    result.setValue(i,j,value);
                 }
             }
-            matrix = result;
         }
+        return result;
     }
 
     //Множення матриці на вектор
@@ -228,4 +238,15 @@ public class Matrix {
         System.out.println("Мінімальний елемент матриці: " + min);
     }
 
+    @Override
+    public String toString() {
+        String result = "\n";
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                result += String.valueOf(matrix[i][j]) + " ";
+            }
+            result += "\n";
+        }
+        return result;
+    }
 }
