@@ -14,14 +14,11 @@ public class Vector{
         return array;
     }
 
-    public void setArray(double[] array) {
-        this.array = array;
-    }
 
     public void setValue(int index, double value) {
         this.array[index] = value;
     }
-    
+
 
     //Заповнення вектора
     public void vectorRandomFill(){
@@ -97,5 +94,4 @@ public class Vector{
             }
         return result;
     }
-
 }
