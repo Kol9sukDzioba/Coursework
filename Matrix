@@ -1,5 +1,7 @@
 package edu.iful.oop;
 
+import java.util.Arrays;
+
 public class Matrix {
     private double[][] matrix;
     private int row;
@@ -13,7 +15,7 @@ public class Matrix {
     public Matrix(int m, int n) {
         row = m;
         col = n;
-        matrix = new double[m][n];
+        matrix= new double[m][n];
         fill();
     }
 
@@ -24,12 +26,22 @@ public class Matrix {
         matrix = m;
     }
 
+    //Друк матриці
+    public void print() {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 
     //Заповнення матриці
     public void fill() {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                matrix[i][j] = (int) (Math.random() * 20 - 8);
+                matrix[i][j] = (int) (Math.random() * 20 - 10);
             }
         }
     }
@@ -138,44 +150,44 @@ public class Matrix {
 
     //Пошук седлових точок
     public int[] saddle() {
-        double minRow; //мінімальне число в рядку
-        double maxCol; //максимальне число в стовбці
-        for (int i = 0; i < row; i++) {
-            minRow = matrix[i][0]; //задаю стартове значення числа в рядку(значення першого елемента в рядку)
+        double minRow;
+        double maxCol;
+            for (int i = 0; i < row; i++) {
+                minRow = matrix[i][0];
 
-            for (int j = 0; j < matrix[0].length; j++) { //знаходження мінімального числа в першому рядку
-                if (matrix[i][j] <= minRow) { //якщо число менше за задане, то змінюємо його
-                    minRow = matrix[i][j]; //заміняю число меншим
-                }
-            }
-
-            int dubls = 1; //кількість одинакових чисел в рядку
-            for (int j = 0; j < matrix[0].length; j++) {  //визначення кількості одинакових чисел в рядку
-                if (matrix[i][j] == minRow) {
-                    dubls++;
-                }
-            }
-
-            int[] elements = new int[dubls];
-            int index = 0; //індекс масиву з одинаковими числами
-            for (int j = 0; j < matrix[0].length; j++) { //заповнюю числами масив індексів
-                if (matrix[i][j] == minRow) {
-                    elements[index] = j;
-                    index++;
-                }
-            }
-            for (int j = 0; j < elements.length; j++) { //перевіряє стовбці по всіх одинакових елементах в рядку
-                maxCol = matrix[0][elements[j]]; //ініціалізую значення 1 елемента в стовбці
-                for (int k = 0; k < matrix.length; k++) { //знаходження максимального числа в стовбці
-                    if (matrix[k][elements[j]] >= maxCol) { //якщо елемент більший за задане спочатку значення змінюю його
-                        maxCol = matrix[k][elements[j]]; //заміна стартового значення на більше
+                for (int j = 0; j < matrix[0].length; j++) {
+                    if (matrix[i][j] <= minRow) {
+                        minRow = matrix[i][j];
                     }
                 }
-                if (minRow >= maxCol) { //перевірка седлової точки
-                    return new int[]{i,elements[j]};
+
+                int dubls = 1;
+                for (int j = 0; j < matrix[0].length; j++) {
+                    if (matrix[i][j] == minRow) {
+                        dubls++;
+                    }
+                }
+
+                int[] elements = new int[dubls];
+                int index = 0;
+                for (int j = 0; j < matrix[0].length; j++) {
+                    if (matrix[i][j] == minRow) {
+                        elements[index] = j;
+                        index++;
+                    }
+                }
+                for (int j = 0; j < elements.length; j++) {
+                    maxCol = matrix[0][elements[j]];
+                    for (int k = 0; k < matrix.length; k++) {
+                        if (matrix[k][elements[j]] >= maxCol) {
+                            maxCol = matrix[k][elements[j]];
+                        }
+                    }
+                    if (minRow >= maxCol) {
+                        return new int[]{i,elements[j]};
+                    }
                 }
             }
-        }
         return null;
     }
 
@@ -224,7 +236,13 @@ public class Matrix {
         String result ="\n"+"";
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
-                result += String.valueOf(matrix[i][j]) + " ";
+                double value =matrix[i][j];
+                if(value>=0){
+                        result += " " + String.valueOf(matrix[i][j]) + " ";
+                }
+                else {
+                    result +=String.valueOf(matrix[i][j]) + " ";
+                }
             }
             result += "\n";
         }
